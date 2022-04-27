@@ -20,7 +20,38 @@ switch(true) {
         return $controller->show($id);
 
         break;
+
+    case preg_match('#^tutos/(\d+)$#', $uri, $matches) && $method == 'PATCH':
+
+        $id = $matches[1];
+
+        $controller = new tutoController();
+
+        return $controller->update($id);
+
+        break;
+
+    //Pagination 
+    case preg_match('#^tutos/(\d+)$#', $uri, $matches) && $method == 'PATCH':
+
+        $id = $matches[1];
+
+        $controller = new tutoController();
+
+        return $controller->update($id);
+
+        break;
+        
+    case preg_match('#^tutos/(\d+)$#', $uri, $matches) && $method == 'DELETE':
+
+        $id = $matches[1];
     
+        $controller = new tutoController();
+    
+        return $controller->delete($id);
+    
+        break;
+
     case preg_match('#^tutos((\?)|$)#', $uri) && $method == 'GET':
 
         $controller = new tutoController();
@@ -28,11 +59,17 @@ switch(true) {
         return $controller->index();
 
         break;
+        
+    case preg_match('#^tutos((?)|$)#', $uri, $matches) && $method == 'POST':
+
+        $controller = new tutoController();
+
+        return $controller->add();
 
     default:
-    
+
     http_response_code(404);
-    
+
     echo json_encode('erreur 404');
-    
+
 }
