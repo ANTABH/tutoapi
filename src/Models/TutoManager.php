@@ -58,31 +58,24 @@ class TutoManager extends Manager
 
     }
 
-    public function findpaginate()
-    {
 
-        // Connexion à la BDD
-        $dbh = static::connectDb();
+    //pagination
+    public function findPaginate(){
+    $sth->bindParam(':page', $page, \PDO::PARAM_INT);
+    if( $page == 0 ){
+        $sth = $dbh->prepare('SELECT * FROM tutos');
+    }else{
+        $page = $page5-5;
+        $sth = $dbh->prepare('SELECT FROM tutos LIMIT 5 OFFSET :page ');
+        $sth->bindParam(':page', $page, \PDO::PARAM_INT);
+    }
 
-        // Requête
-        $sth = $dbh->prepare('SELECT * FROM tutos LIMIT 5');
-        $sth->execute();
-
-        $tutos = [];
-
-        while($row = $sth->fetch(\PDO::FETCH_ASSOC)){
-
-            $tuto = new Tuto();
-            $tuto->setId($row['id']);
-            $tuto->setTitle($row['title']);
-            $tuto->setDescription($row['description']);
-            $tuto->setCreatedAt($row["createdAt"]);
-            $tutos[] = $tuto;
-
-        }
-
-        return $tutos;
-
+    if(isset($_GET["page"])){
+        $page = $_GET["page"];
+        $tutos = $manager->findAll($page);
+    }else{
+        $tutos = $manager->findAll();
+    }
     }
 
     //fonction qui permet d'ajouter un tuto à la base de données
