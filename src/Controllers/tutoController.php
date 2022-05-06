@@ -53,7 +53,7 @@ class tutoController extends abstractController
     }
 
     public function index()
-    {
+    { 
         $tutos = [];
         $manager = new TutoManager();
         if(isset($_GET["page"]))
