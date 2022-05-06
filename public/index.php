@@ -32,7 +32,7 @@ switch(true) {
         break;
 
     //Pagination 
-    case preg_match('#^tutos/(\d+)$#', $uri, $matches) && $method == 'PATCH':
+    case preg_match('#^tutos/(\d+)$#', $uri, $matches) && $method == 'GET':
 
         $id = $matches[1];
 
